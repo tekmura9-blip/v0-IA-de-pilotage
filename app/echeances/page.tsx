@@ -23,6 +23,8 @@ import {
   AlertTriangle,
   Banknote,
   TrendingUp,
+  Filter,
+  RotateCcw,
 } from "lucide-react"
 
 export const metadata = {
@@ -44,23 +46,23 @@ export default function EcheancesPage() {
           {/* Page Header */}
           <div className="mb-8">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-foreground shadow-sm">
-                  <CalendarClock className="h-5 w-5 text-background" />
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-foreground shadow-sm">
+                  <CalendarClock className="h-6 w-6 text-background" />
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
                     Échéances
                   </h1>
-                  <p className="mt-0.5 text-sm text-muted-foreground">
-                    Suivez toutes les échéances de paiement, les renouvellements et les retards.
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Suivez vos échéances de paiement et optimisez vos recouvrements
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="h-9 gap-2">
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="h-10 gap-2 border-border/60 bg-card shadow-sm">
                   <Download className="h-4 w-4" />
-                  <span className="hidden sm:inline">Exporter</span>
+                  <span className="hidden sm:inline">Exporter CSV</span>
                 </Button>
                 <AddEcheanceSheet />
               </div>
@@ -68,114 +70,152 @@ export default function EcheancesPage() {
           </div>
 
           {/* KPI Summary Cards */}
-          <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-border/60 bg-card p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-100">
-                  <Clock className="h-4 w-4 text-sky-600" />
+          <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:shadow-md">
+              <div className="flex items-start justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 ring-1 ring-sky-100">
+                  <Clock className="h-5 w-5 text-sky-600" />
                 </div>
-                <Badge variant="outline" className="bg-sky-500/10 text-sky-600 border-sky-500/20">
-                  Cette semaine
+                <Badge variant="outline" className="h-6 bg-sky-50 text-sky-700 border-sky-200 text-xs font-medium">
+                  7 jours
                 </Badge>
               </div>
-              <p className="mt-3 text-2xl font-bold tabular-nums text-foreground">12</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">Échéances cette semaine</p>
+              <div className="mt-4">
+                <p className="text-3xl font-bold tabular-nums tracking-tight text-foreground">12</p>
+                <p className="mt-1.5 text-sm font-medium text-muted-foreground">Échéances cette semaine</p>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-sky-600 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
 
-            <div className="rounded-xl border border-border/60 bg-card p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100">
-                  <CalendarClock className="h-4 w-4 text-emerald-600" />
+            <div className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:shadow-md">
+              <div className="flex items-start justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 ring-1 ring-emerald-100">
+                  <CalendarClock className="h-5 w-5 text-emerald-600" />
                 </div>
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
-                  Ce mois
+                <Badge variant="outline" className="h-6 bg-emerald-50 text-emerald-700 border-emerald-200 text-xs font-medium">
+                  Mars 2026
                 </Badge>
               </div>
-              <p className="mt-3 text-2xl font-bold tabular-nums text-foreground">34</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">Échéances ce mois-ci</p>
+              <div className="mt-4">
+                <p className="text-3xl font-bold tabular-nums tracking-tight text-foreground">34</p>
+                <p className="mt-1.5 text-sm font-medium text-muted-foreground">Échéances ce mois-ci</p>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
 
-            <div className="rounded-xl border border-border/60 bg-card p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-100">
-                  <AlertTriangle className="h-4 w-4 text-red-600" />
+            <div className="group relative overflow-hidden rounded-xl border border-red-200/60 bg-red-50/30 p-5 shadow-sm transition-all hover:shadow-md">
+              <div className="flex items-start justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-100 ring-1 ring-red-200">
+                  <AlertTriangle className="h-5 w-5 text-red-600" />
                 </div>
-                <Badge variant="outline" className="bg-red-500/10 text-red-600 border-red-500/20">
+                <Badge variant="outline" className="h-6 bg-red-100 text-red-700 border-red-300 text-xs font-semibold">
                   Urgent
                 </Badge>
               </div>
-              <p className="mt-3 text-2xl font-bold tabular-nums text-foreground">4</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">Paiements en retard</p>
+              <div className="mt-4">
+                <p className="text-3xl font-bold tabular-nums tracking-tight text-red-700">4</p>
+                <p className="mt-1.5 text-sm font-medium text-red-600/80">Paiements en retard</p>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-400 to-red-600" />
             </div>
 
-            <div className="rounded-xl border border-border/60 bg-card p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100">
-                  <Banknote className="h-4 w-4 text-amber-600" />
+            <div className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:shadow-md">
+              <div className="flex items-start justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 ring-1 ring-amber-100">
+                  <Banknote className="h-5 w-5 text-amber-600" />
                 </div>
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
-                  <TrendingUp className="mr-1 h-3 w-3" />
-                  +8%
+                <Badge variant="outline" className="h-6 bg-emerald-50 text-emerald-700 border-emerald-200 text-xs font-medium gap-1">
+                  <TrendingUp className="h-3 w-3" />
+                  +8,2%
                 </Badge>
               </div>
-              <p className="mt-3 text-2xl font-bold tabular-nums text-foreground">42 850 EUR</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">Montant total à encaisser</p>
+              <div className="mt-4">
+                <p className="text-3xl font-bold tabular-nums tracking-tight text-foreground">42 850 EUR</p>
+                <p className="mt-1.5 text-sm font-medium text-muted-foreground">Montant total à encaisser</p>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
-              {/* Search */}
-              <div className="relative w-full sm:max-w-xs">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Rechercher un client ou un produit"
-                  className="h-10 w-full border-border/60 bg-card pl-10 shadow-sm"
-                />
+          {/* Filters Section */}
+          <div className="mb-6 rounded-xl border border-border/60 bg-card p-4 shadow-sm">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+                {/* Search */}
+                <div className="relative w-full sm:max-w-sm">
+                  <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Rechercher par client, entreprise ou produit..."
+                    className="h-10 w-full border-border/60 bg-background pl-10"
+                  />
+                </div>
+
+                {/* Filter Dropdowns */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Select defaultValue="all">
+                    <SelectTrigger className="h-10 w-full border-border/60 bg-background sm:w-[130px]">
+                      <SelectValue placeholder="Statut" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tous statuts</SelectItem>
+                      <SelectItem value="paye">Payé</SelectItem>
+                      <SelectItem value="a_venir">À venir</SelectItem>
+                      <SelectItem value="en_retard">En retard</SelectItem>
+                      <SelectItem value="a_risque">À risque</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select defaultValue="all">
+                    <SelectTrigger className="h-10 w-full border-border/60 bg-background sm:w-[130px]">
+                      <SelectValue placeholder="Fréquence" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes</SelectItem>
+                      <SelectItem value="mensuel">Mensuel</SelectItem>
+                      <SelectItem value="trimestriel">Trimestriel</SelectItem>
+                      <SelectItem value="annuel">Annuel</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select defaultValue="month">
+                    <SelectTrigger className="h-10 w-full border-border/60 bg-background sm:w-[140px]">
+                      <SelectValue placeholder="Période" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="week">Cette semaine</SelectItem>
+                      <SelectItem value="month">Ce mois</SelectItem>
+                      <SelectItem value="quarter">Ce trimestre</SelectItem>
+                      <SelectItem value="year">Cette année</SelectItem>
+                      <SelectItem value="all">Toutes périodes</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select defaultValue="all">
+                    <SelectTrigger className="h-10 w-full border-border/60 bg-background sm:w-[130px]">
+                      <SelectValue placeholder="Priorité" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Toutes</SelectItem>
+                      <SelectItem value="haute">Haute</SelectItem>
+                      <SelectItem value="moyenne">Moyenne</SelectItem>
+                      <SelectItem value="faible">Faible</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              {/* Status Filter */}
-              <Select>
-                <SelectTrigger className="h-10 w-full border-border/60 bg-card shadow-sm sm:w-[140px]">
-                  <SelectValue placeholder="Statut" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="paye">Payé</SelectItem>
-                  <SelectItem value="a_venir">À venir</SelectItem>
-                  <SelectItem value="en_retard">En retard</SelectItem>
-                  <SelectItem value="a_risque">À risque</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Frequency Filter */}
-              <Select>
-                <SelectTrigger className="h-10 w-full border-border/60 bg-card shadow-sm sm:w-[140px]">
-                  <SelectValue placeholder="Fréquence" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Toutes</SelectItem>
-                  <SelectItem value="mensuel">Mensuel</SelectItem>
-                  <SelectItem value="trimestriel">Trimestriel</SelectItem>
-                  <SelectItem value="annuel">Annuel</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Period Filter */}
-              <Select>
-                <SelectTrigger className="h-10 w-full border-border/60 bg-card shadow-sm sm:w-[140px]">
-                  <SelectValue placeholder="Période" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Toutes</SelectItem>
-                  <SelectItem value="week">Cette semaine</SelectItem>
-                  <SelectItem value="month">Ce mois</SelectItem>
-                  <SelectItem value="quarter">Ce trimestre</SelectItem>
-                  <SelectItem value="year">Cette année</SelectItem>
-                </SelectContent>
-              </Select>
+              {/* Filter Actions */}
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" className="h-9 gap-2 text-muted-foreground hover:text-foreground">
+                  <RotateCcw className="h-4 w-4" />
+                  Réinitialiser
+                </Button>
+                <Button variant="outline" size="sm" className="h-9 gap-2">
+                  <Filter className="h-4 w-4" />
+                  Filtres avancés
+                </Button>
+              </div>
             </div>
           </div>
 
