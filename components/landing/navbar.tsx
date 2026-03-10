@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ArrowRight } from "lucide-react"
 
@@ -24,12 +25,12 @@ export function Navbar() {
     }`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 lg:h-18 items-center justify-between">
-          <div className="flex items-center gap-3">
+          <Link href="/landing" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
               <span className="text-sm font-bold text-accent-foreground">R</span>
             </div>
             <span className="text-xl font-semibold text-background tracking-tight">RenewFlow</span>
-          </div>
+          </Link>
 
           <div className="hidden lg:flex items-center gap-10">
             <a href="#problemes" className="text-sm font-medium text-background/70 hover:text-background transition-colors">
@@ -50,13 +51,17 @@ export function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
-              Connexion
-            </Button>
-            <Button size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 shadow-lg shadow-accent/25">
-              Demander une démo
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Button>
+            <Link href="/connexion">
+              <Button variant="ghost" size="sm" className="text-background/80 hover:text-background hover:bg-background/10">
+                Connexion
+              </Button>
+            </Link>
+            <Link href="/connexion">
+              <Button size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 shadow-lg shadow-accent/25">
+                Demander une démo
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Button>
+            </Link>
           </div>
 
           <button
@@ -87,13 +92,17 @@ export function Navbar() {
                 FAQ
               </a>
               <div className="flex flex-col gap-3 pt-5 border-t border-background/10">
-                <Button variant="ghost" className="justify-start text-background/80 hover:text-background hover:bg-background/10">
-                  Connexion
-                </Button>
-                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
-                  Demander une démo
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
+                <Link href="/connexion">
+                  <Button variant="ghost" className="w-full justify-start text-background/80 hover:text-background hover:bg-background/10">
+                    Connexion
+                  </Button>
+                </Link>
+                <Link href="/connexion">
+                  <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
+                    Demander une démo
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
